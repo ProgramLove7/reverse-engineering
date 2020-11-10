@@ -13,14 +13,21 @@
 新建项目，在源文件中创建.c文件，并在项目属性 -- 连接器 -- 高级 -- 数据执行保护（DEP）勾选否。
 在.c文件中复制,编译，调试执行代码。
 代码展示：
+
 ![](./img/1.png)
+
 执行成果如下：
+
 ![](./img/2.png)
 
 ### 2.能从汇编源码编译通过并成功dump
+
 对原项目进行编译与链接：
+
 ![](./img/3.png)
+
 进行dumpbin操作：
+
 ![](./img/7.png)
 
 ### 3.自行查阅资料，搜索Windows PEB结构体，PE文件导入表导出表相关数据结构的文档，解读shellcode原理
@@ -39,12 +46,17 @@
 
 参照老师的代码，修改字符串“calc.exe”为“notepad.exe”，其他不变。需要注意数据信息逆序入栈输入“exe.dapeton”并且将字符串每4个字符分为一组用ASCII对应值代替，不足的地方就用0x00来代替。
 修改如下图：
+
 ![](./img/4.png)
+
 再依次执行下述命令得到机械指令
 - `nasm -f win32 notepad.asm -o notepad.o`
 - `for i in $(objdump -D notepad.o | grep "^ " | cut -f2); do echo -n '\x'$i; done; echo`
+
 ![](./img/5.png)
-将该串代码代替原代码中的code并运行
+
+- 将该串代码代替原代码中的code并运行
+
 ![](./img/6.png)
 
 
